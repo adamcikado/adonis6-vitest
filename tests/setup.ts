@@ -1,7 +1,6 @@
 import 'reflect-metadata'
 import { beforeAll } from 'vitest'
 import { Ignitor } from '@adonisjs/core'
-import testUtils from '@adonisjs/core/services/test_utils'
 
 const APP_ROOT = new URL('./', import.meta.url)
 const IMPORTER = (filePath: string) => {
@@ -22,7 +21,8 @@ beforeAll(async () => {
     .testRunner()
     .configure(async () => {})
     .run(async () => {
-      await testUtils.httpServer().start()
+      const testUtils = await import('@adonisjs/core/services/test_utils')
+      await testUtils.default.httpServer().start()
     })
 
   // alternatively
